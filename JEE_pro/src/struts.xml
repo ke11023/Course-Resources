@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="json" namespace="/" extends="json-default">
+		<action name="Json_*" class="regAction" method="checkRegsiter">
+			<result name="userAllowRegister" type="json"></result>
+			<result name="userNoRegister" type="json"></result>
+		</action>
+	</package>
+
+	<package name="regist" extends="struts-default">
+		<action name="regist" class="regAction">
+			<result>index.jsp</result>
+		</action>
+	</package>
+
+	<package name="login" extends="struts-default">
+		<action name="login" class="loginAction" method="Login">
+			<result name="success">back/admin.jsp</result>
+			<result name="teacher">teacher/teacher.jsp</result>
+			<result name="input">login.html</result>
+		</action>
+		<action name="student_login" class="loginAction" >
+			<result name="success" type="redirectAction">studentpage</result>
+			<result name="input">index.jsp</result>
+		</action>
+		<!-- 管理员登录与教师登录合并 此教师登录作废 -->
+		<!-- <action name="teacher_login" class="loginAction" method="TeacherLogin">
+			<result name="success">stage/teacher.jsp</result>
+			<result name="input">index.jsp</result>
+		</action> -->
+		
+		
+		<action name="singout" class="loginAction" method="singout">
+			<result>index.jsp</result>
+		</action>
+	</package>
+
+	<package name="managerInfo" extends="struts-default">
+	
+		<action name="manager_info" class="infoQuery" method="managerQuery">
+			<result name="success">back/managerInfo.jsp</result>
+			<result name="input">admin.jsp</result>
+		</action>
+		<action name="teacher_info" class="infoQuery" method="teacherQuery">
+			<result name="success">back/teacherInfo.jsp</result>
+			<result name="input">admin.jsp</result>
+		</action>
+		<action name="student_info" class="infoQuery">
+			<result name="success">back/studentInfo.jsp</result>
+			<result name="input">admin.jsp</result>
+		</action>
+		<action name="examineStudent" class="infoQuery" method="examineStudent">
+			<result>back/examin.jsp</result>
+		</action>
+		<action name="courseAction" class="infoQuery" method="teacherQuery">
+			<result>back/addCourse.jsp</result>
+		</action>
+		<action name="course_info" class="courseAction" method="courseQuery">
+			<result name="success">back/classInfo.jsp</result>
+			<result name="input">back/admin.jsp</result>
+		</action>
+		<action name="addcourse" class="courseAction">
+			<result type="redirectAction">course_info</result>
+		</action>
+	</package>
+
+	<package name="editInfo" extends="struts-default">
+		<!-- for manager -->
+		<action name="managerEdit" class="EditAction" method="managerGoto">
+			<result>back/managerEdit.jsp</result>
+		</action>
+		<action name="teacherEdit" class="EditAction" method="teacherGoto">
+			<result>back/teacherEdit.jsp</result>
+		</action>
+		<action name="courseEdit" class="EditAction" method="courseGoto">
+			<result>back/courseEdit.jsp</result>
+		</action>
+		<action name="studentEdit" class="EditAction" method="studentGoto">
+			<result>back/studentEdit.jsp</result>
+		</action>
+		<action name="manager_edit" class="EditAction" method="managerEdit">
+			<result name="success" type="redirectAction">manager_info</result>
+			<result name="input">back/managerEdit.jsp</result>
+		</action>
+		<action name="teacher_edit" class="EditAction" method="teacherEdit">
+			<result name="success" type="redirectAction">teacher_info</result>
+			<result name="input">back/teacherEdit.jsp</result>
+		</action>
+		<action name="course_edit" class="EditAction" method="courseEdit">
+			<result name="success" type="redirectAction">course_info</result>
+			<result name="input">back/courseEdit.jsp</result>
+		</action>
+		<action name="student_edit" class="EditAction">
+			<result name="success" type="redirectAction">student_info</result>
+			<result name="input">back/studentEdit.jsp</result>
+		</action>
+		<action name="examin" class="EditAction" method="examin">
+			<result type="redirectAction">examineStudent</result>			
+		</action>
+		<action name="deleteCourse" class="EditAction" method="deleteCourse">
+			<result type="redirectAction">course_info</result>
+		</action>
+		<action name="deleteTeacher" class="EditAction" method="deleteTeacher">
+			<result type="redirectAction">teacher_info</result>
+		</action>
+		<action name="deleteStudent" class="EditAction" method="deleteStudent">
+			<result type="redirectAction">student_info</result>
+		</action>
+		
+		<!-- for teacher -->
+		<action name="teacherInfo" class="EditAction" method="teacherGoto">
+			<result>teacher/infoEdit.jsp</result>
+		</action>
+		<action name="teacher_Edit" class="EditAction" method="teacherEdit">
+			<result name="success">teacher/teacher.jsp</result>
+			<result name="input">teacher/infoEdit.jsp</result>
+		</action>
+	</package>
+
+	<package name="Input" extends="struts-default">
+		<!-- for manager -->
+		<action name="teacherInput" class="InputAction" method="teacherInput">
+			<param name="savepath">/upload/</param>
+			<result name="success" type="redirectAction">teacher_info</result>
+			<result name="input">back/teacherInput.jsp</result>
+		</action>
+		<action name="studentInput" class="InputAction">
+			<param name="savepath">/upload</param>
+			<result name="success" type="redirectAction">student_info</result>
+			<result name="input">back/studentInput.jsp</result>
+		</action>
+	</package>
+	
+	<package name="teacherOption" extends="struts-default">
+		<action name="resourceUpload" class="teacherAction" method="resourceUpload">
+			<result>teacher/resourceUpload.jsp</result>
+		</action>
+		<action name="homework" class="teacherAction" method="homework">
+			<result>teacher/homework.jsp</result>
+		</action>
+		<action name="upLoad" class="teacherAction">
+			<param name="savepath">/upload</param>
+			<result name="success" type="redirectAction">resourceInfo</result>
+			<result name="input">teacher/resourceUpload.jsp</result>
+		</action>
+		<action name="resourceInfo" class="teacherAction" method="resourceInfo">
+			<result name="success">teacher/resourceInfo.jsp</result>
+			<result name="input">teacher/teacher.jsp</result>
+		</action>
+		<action name="resourceDetail" class="teacherAction" method="resourceDetail">
+			<result name="success">teacher/resource.jsp</result>
+			<result name="input">teacher/resourceInfo.jsp</result>
+		</action>
+		<action name="deleteResource" class="teacherAction" method="deleteResource">
+			<result type="redirectAction">resourceInfo</result>
+		</action>
+		<action name="homeworkSetting" class="teacherAction" method="homeworkSetting">
+			<result type="redirectAction">resourceInfo</result>
+		</action>
+		<action name="InfoManager" class="teacherAction" method="InfoQuery">
+			<result>teacher/InfoManager.jsp</result>
+		</action>
+		<action name="InfoEdit" class="teacherAction" method="InfoEdit">
+			<result>teacher/teacher.jsp</result>
+		</action>
+	</package>
+	
+	<package name="Stage" extends="struts-default" >
+		<interceptors>
+		<interceptor name="loginedCheck" class="filter.StageInterceptor"/>  
+            <interceptor-stack name="mystack">  
+                <interceptor-ref name="loginedCheck" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+		</interceptors>
+		
+		<action name="QueryCourseforStage" class="stageAction" method="QueryCourseforStage">
+			<result>index.jsp</result>
+		</action>
+		<action name="studentpage" class="stageAction" method="homeworkQuery">
+			<result name="success">stage/student.jsp</result>
+			<result name="input" type="redirectAction">QueryCourseforStage</result>
+			<interceptor-ref name="mystack" />  
+		</action>	
+		<action name="content" class="stageAction">
+			<result>stage/Content.jsp</result>
+		</action>
+		<action name="resource" class="stageAction" method="resourceDetail">
+			<result name="success">stage/resource.jsp</result>
+			<result name="input">stage/Content.jsp</result>
+			<interceptor-ref name="mystack" />  
+		</action>
+		<action name="homeworkDetail" class="stageAction" method="homeworkDetail">
+			<result name="success">/stage/resource.jsp</result>
+		</action>
+		<action name="download" class="stageAction" method="download">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+                <param name="contentDisposition">attachment;fileName="${downFileName}"</param>
+                <param name="inputName">downloadFile</param>
+                <param name="bufferSize">4096</param>
+			</result>
+			<result name="input">stage/Content.jsp</result>
+			<interceptor-ref name="mystack" />  
+		</action>
+		<action name="StudentInfoEdit" class="stageAction" method="StudentInfoEdit">
+			<result type="redirectAction">studentpage</result>
+		</action>
+	</package>
+	
+	<package name="goTo" extends="struts-default">
+		<action name="teacherinput">
+			<result>back/teacherInput.jsp</result>
+		</action>
+		<action name="studentinput">
+			<result>back/studentInput.jsp</result>
+		</action>
+		<action name="home">
+			<result>back/admin.jsp</result>
+		</action>
+		<action name="teacher">
+			<result>teacher/teacher.jsp</result>
+		</action>	
+		<action name="StudentInfoManager">
+			<result>stage/InfoManager.jsp</result>
+		</action>
+	</package>
+</struts>    

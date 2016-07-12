@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<bean id="userdao" class="dao.userDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="infodao" class="dao.infoDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="inputdao" class="dao.inputDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="editdao" class="dao.editDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="teacherdao" class="dao.teacherDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="stagedao" class="dao.stageDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+	<bean id="regAction" class="Action.regAction">
+		<property name="userdao" ref="userdao"></property>
+	</bean>
+	
+	<bean id="loginAction" class="Action.loginAction">
+		<property name="userdao" ref="userdao"></property>
+	</bean>
+	
+	<bean id="infoQuery" class="Action.infoQueryAction">
+		<property name="infodao" ref="infodao"></property>
+	</bean>
+	
+	<bean id="courseAction" class="Action.courseAction">
+		<property name="infodao" ref="infodao"></property>
+	</bean>
+	
+	<bean id="InputAction" class="Action.inputAction">
+		<property name="inputdao" ref="inputdao"></property>
+	</bean>
+	<bean id="EditAction" class="Action.editAction">
+		<property name="editdao" ref="editdao"></property>
+	</bean>
+	
+	<bean id="teacherAction" class="Action.teacherAction">
+		<property name="teacherdao" ref="teacherdao"></property>
+	</bean>
+	
+	<bean id="stageAction" class="Action.stageAction">
+		<property name="stagedao" ref="stagedao"></property>
+	</bean>
+	
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	
+	
+	<!-- 使用注入式  放弃声明式 -->
+	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED"/>
+			<tx:method name="*Input" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="alladdmethod" expression="execution(* dao.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="alladdmethod" />
+	</aop:config> -->
+</beans>
